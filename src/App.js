@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { Document, Page, pdfjs } from "react-pdf";
+import { pdfjs } from "react-pdf";
+import { Document, Page } from "react-pdf/dist/esm/entry.webpack";
+
 import Navbar from "./Navbar";
 import Pdf from "./Pdf";
 import Button from "./components/Button";
@@ -8,8 +10,6 @@ pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pd
 
 function App() {
   const [numPages, setNumPages] = useState(null);
-  const [pageNumber, setPageNumber] = useState(1);
-
   const [pdfFile, setPdfFile] = useState(null);
   const [pdfFileError, setPdfFileError] = useState("");
 
@@ -17,9 +17,14 @@ function App() {
     setNumPages(numPages);
   }
 
-  // onchange event
+  const numArray = [];
+  for (let i = 1; i <= numPages; i++) {
+    numArray.push(i);
+  }
+
+  // onChange event
   const handlePdfFileChange = (e) => {
-    let selectedFile = e.target.files[0];
+    const selectedFile = e.target.files[0];
     if (selectedFile) {
       if (selectedFile) {
         let reader = new FileReader();
@@ -53,7 +58,10 @@ function App() {
             onLoadSuccess={onDocumentLoadSuccess}
             className="document"
           >
-            <Page pageNumber={pageNumber} className="page" />
+            {numArray.length !== 0 &&
+              numArray.map((numPage) => (
+                <Page pageNumber={numPage} key={numPage} />
+              ))}
           </Document>
         </div>
       )}

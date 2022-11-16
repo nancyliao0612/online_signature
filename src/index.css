@@ -22,24 +22,32 @@ html {
 }
 
 body {
+  position: relative;
   font-family: "Noto Sans TC", sans-serif;
   color: var(--color-black);
+  height: 100vh;
   font-weight: 400;
-}
-
-/* Choose File */
-#button {
-  cursor: pointer;
 }
 
 /* PDF Page */
 .document {
   margin-top: 3px;
   display: flex;
-  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.page {
-  width: 100%;
+.react-pdf__Page__canvas {
   max-width: 624px;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain;
+}
+
+.react-pdf__Page__textContent,
+.react-pdf__Page__annotations {
+  display: none;
+  width: 0;
+  height: 0;
 }

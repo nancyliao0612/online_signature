@@ -9,8 +9,15 @@ const Wrapper = styled.div`
   margin: 0 auto;
   line-height: 45px;
   color: var(--color-white);
+  cursor: pointer;
+
+  label {
+    cursor: pointer;
+  }
 `;
 const ButtonContainer = styled.div`
+  position: absolute;
+  top: calc(50% + 124px);
   padding: 0 24px;
   width: 100%;
 `;
@@ -20,10 +27,7 @@ const Button = ({ handlePdfFileChange }) => {
 
   return (
     <ButtonContainer>
-      {/* <Wrapper type="file" accept="application/pdf" onChange={uploadPDF}>
-        選擇檔案
-      </Wrapper> */}
-      <Wrapper id="button">
+      <Wrapper>
         <label for="files">選擇檔案</label>
         <input
           id="files"

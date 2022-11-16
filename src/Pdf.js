@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { ReactComponent as Signature_icon } from "./assets/Signature_icon.svg";
-import Button from "./components/Button";
 import Circle from "./components/Circle";
 
 const Wrapper = styled.section`
@@ -8,14 +7,20 @@ const Wrapper = styled.section`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: 36px;
-  margin: 50px 60px;
+`;
+
+const IconContainer = styled.div`
+  position: absolute;
+  top: calc(50% - 145px);
 `;
 
 const StepsContainer = styled.div`
+  position: absolute;
+  top: calc(50% - 65px);
   display: flex;
   justify-content: center;
   gap: 30px;
+  margin-top: 56px;
 `;
 
 const Step = styled.div`
@@ -29,7 +34,9 @@ const Pdf = () => {
   return (
     <>
       <Wrapper>
-        <Signature_icon />
+        <IconContainer>
+          <Signature_icon />
+        </IconContainer>
         <StepsContainer>
           <Step>
             <Circle number={1} />
@@ -45,7 +52,6 @@ const Pdf = () => {
           </Step>
         </StepsContainer>
       </Wrapper>
-      {/* <Button /> */}
     </>
   );
 };
