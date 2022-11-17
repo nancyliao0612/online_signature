@@ -13,6 +13,7 @@ const Wrapper = styled.section`
 
   .icon {
     font-size: 24px;
+    cursor: pointer;
   }
 
   .signup {
@@ -26,12 +27,12 @@ const IconContainer = styled.div`
   gap: 16px;
 `;
 
-const Navbar = ({ hasPDF }) => {
+const Navbar = ({ hasPDF, setOpen }) => {
   return (
     <Wrapper>
       {hasPDF ? (
         <>
-          <BsX className="icon" />
+          <BsX className="icon" onClick={() => setOpen(true)} />
           簽個名
           <IconContainer>
             <BsPen />

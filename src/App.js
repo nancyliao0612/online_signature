@@ -5,6 +5,7 @@ import { Document, Page } from "react-pdf/dist/esm/entry.webpack";
 import Navbar from "./Navbar";
 import Pdf from "./Pdf";
 import Button from "./components/Button";
+import Dialog from "./components/Dialog";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
@@ -12,6 +13,7 @@ function App() {
   const [numPages, setNumPages] = useState(null);
   const [pdfFile, setPdfFile] = useState(null);
   const [pdfFileError, setPdfFileError] = useState("");
+  const [open, setOpen] = useState(false);
 
   function onDocumentLoadSuccess({ numPages }) {
     setNumPages(numPages);
@@ -44,7 +46,7 @@ function App() {
 
   return (
     <div>
-      <Navbar hasPDF={pdfFile} />
+      <Navbar hasPDF={pdfFile} setOpen={setOpen} />
       {!pdfFile && (
         <>
           <Pdf />
@@ -58,6 +60,7 @@ function App() {
             onLoadSuccess={onDocumentLoadSuccess}
             className="document"
           >
+            <Dialog open={open} setOpen={setOpen} setPdfFile={setPdfFile} />
             {numArray.length !== 0 &&
               numArray.map((numPage) => (
                 <Page pageNumber={numPage} key={numPage} />
