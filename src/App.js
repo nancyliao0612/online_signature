@@ -26,6 +26,7 @@ function App() {
   const [pdfFile, setPdfFile] = useState(null);
   const [pdfFileError, setPdfFileError] = useState("");
   const [open, setOpen] = useState(false);
+  const [exportFile, setExportFile] = useState(false);
 
   function onDocumentLoadSuccess({ numPages }) {
     setNumPages(numPages);
@@ -58,7 +59,11 @@ function App() {
 
   return (
     <div>
-      <Navbar hasPDF={pdfFile} setOpen={setOpen} />
+      <Navbar
+        hasPDF={pdfFile}
+        setOpen={setOpen}
+        setExportFile={setExportFile}
+      />
       {!pdfFile && (
         <>
           <Pdf />
@@ -78,7 +83,12 @@ function App() {
               numArray.map((numPage) => (
                 <Page pageNumber={numPage} key={numPage} loading={false} />
               ))}
-            <Dialog open={open} setOpen={setOpen} setPdfFile={setPdfFile} />
+            <Dialog
+              open={open}
+              setOpen={setOpen}
+              setPdfFile={setPdfFile}
+              exportFile={exportFile}
+            />
           </Document>
         </PdfContainer>
       )}

@@ -23,8 +23,6 @@ const ButtonContainer = styled.div`
 `;
 
 const Button = ({ handlePdfFileChange }) => {
-  console.log("handlePdfFileChange", handlePdfFileChange);
-
   return (
     <ButtonContainer>
       <Wrapper>

@@ -34,8 +34,12 @@ const DialogBody = styled.div`
     margin-left: 24px;
     cursor: pointer;
   }
-  span:nth-child(2) {
+  .drop_file {
     color: var(--color-red);
+  }
+
+  .export_file {
+    color: var(--color-primary);
   }
 
   div {
@@ -63,7 +67,7 @@ const DialogBody = styled.div`
   }
 `;
 
-const Dialog = ({ open, setOpen, setPdfFile }) => {
+const Dialog = ({ open, setOpen, setPdfFile, exportFile }) => {
   const handleClick = () => {
     setOpen(false);
     setPdfFile(null);
@@ -71,11 +75,19 @@ const Dialog = ({ open, setOpen, setPdfFile }) => {
   return (
     <DialogContainer style={{ display: !open && "none" }}>
       <DialogBody>
-        <p>放棄簽署文件</p>
-        <p>文件將被刪除</p>
+        <p>{exportFile ? "完成簽署文件?" : "放棄簽署文件?"}</p>
+        <p>{exportFile ? "文件將被輸出" : "文件將被刪除"}</p>
         <div>
           <span onClick={() => setOpen(false)}>取消</span>
-          <span onClick={() => handleClick()}>放棄</span>
+          {exportFile ? (
+            <span onClick={() => console.log("hi")} className="export_file">
+              完成
+            </span>
+          ) : (
+            <span onClick={() => handleClick()} className="drop_file">
+              放棄
+            </span>
+          )}
         </div>
       </DialogBody>
     </DialogContainer>

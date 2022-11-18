@@ -27,16 +27,26 @@ const IconContainer = styled.div`
   gap: 16px;
 `;
 
-const Navbar = ({ hasPDF, setOpen }) => {
+const Navbar = ({ hasPDF, setOpen, setExportFile }) => {
+  const handleDropFile = () => {
+    setOpen(true);
+    setExportFile(false);
+  };
+
+  const handleFinished = () => {
+    setOpen(true);
+    setExportFile(true);
+  };
+
   return (
     <Wrapper>
       {hasPDF ? (
         <>
-          <BsX className="icon" onClick={() => setOpen(true)} />
+          <BsX className="icon" onClick={() => handleDropFile()} />
           簽個名
           <IconContainer>
             <BsPen />
-            <BsCheck className="icon" />
+            <BsCheck className="icon" onClick={() => handleFinished()} />
           </IconContainer>
         </>
       ) : (
