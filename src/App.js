@@ -6,8 +6,20 @@ import Navbar from "./Navbar";
 import Pdf from "./Pdf";
 import Button from "./components/Button";
 import Dialog from "./components/Dialog";
+import Loading from "./components/Loading";
+import styled from "styled-components";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+
+const test = document.documentElement.scrollHeight > window.innerHeight;
+
+const PdfContainer = styled.section`
+  background-color: #f7f7f7;
+  /* height: ${(props) => props.test} ? 100% : 100vh */
+`;
+
+console.log("body. scrollHeight", document.documentElement.scrollHeight);
+console.log("window. innerHeight", window.innerHeight);
 
 function App() {
   const [numPages, setNumPages] = useState(null);
@@ -54,19 +66,21 @@ function App() {
         </>
       )}
       {pdfFile && (
-        <div style={{ backgroundColor: "#f7f7f7" }}>
+        <PdfContainer>
           <Document
             file={pdfFile}
             onLoadSuccess={onDocumentLoadSuccess}
             className="document"
+            loading={<Loading />}
+            error={false}
           >
-            <Dialog open={open} setOpen={setOpen} setPdfFile={setPdfFile} />
             {numArray.length !== 0 &&
               numArray.map((numPage) => (
-                <Page pageNumber={numPage} key={numPage} />
+                <Page pageNumber={numPage} key={numPage} loading={false} />
               ))}
+            <Dialog open={open} setOpen={setOpen} setPdfFile={setPdfFile} />
           </Document>
-        </div>
+        </PdfContainer>
       )}
     </div>
   );

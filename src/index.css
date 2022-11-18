@@ -52,3 +52,14 @@ body {
   width: 0;
   height: 0;
 }
+
+/* LOADING SECTION */
+.react-pdf__message--loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--color-white);
+}
