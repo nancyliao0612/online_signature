@@ -67,11 +67,7 @@ const DialogBody = styled.div`
   }
 `;
 
-const Dialog = ({ open, setOpen, setPdfFile, exportFile }) => {
-  const handleClick = () => {
-    setOpen(false);
-    setPdfFile(null);
-  };
+const Dialog = ({ open, setOpen, exportFile, handleAbort, handleExport }) => {
   return (
     <DialogContainer style={{ display: !open && "none" }}>
       <DialogBody>
@@ -80,11 +76,11 @@ const Dialog = ({ open, setOpen, setPdfFile, exportFile }) => {
         <div>
           <span onClick={() => setOpen(false)}>取消</span>
           {exportFile ? (
-            <span onClick={() => console.log("hi")} className="export_file">
+            <span onClick={handleExport} className="export_file">
               完成
             </span>
           ) : (
-            <span onClick={() => handleClick()} className="drop_file">
+            <span onClick={handleAbort} className="drop_file">
               放棄
             </span>
           )}

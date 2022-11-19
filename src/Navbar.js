@@ -3,6 +3,12 @@ import { BsPen, BsCheck, BsX } from "react-icons/bs";
 import { AiOutlineCheck } from "react-icons/ai";
 
 const Wrapper = styled.section`
+  z-index: 3;
+  position: sticky;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -27,7 +33,7 @@ const IconContainer = styled.div`
   gap: 16px;
 `;
 
-const Navbar = ({ hasPDF, setOpen, setExportFile }) => {
+const Navbar = ({ hasPDF, setOpen, setExportFile, handleEditClick }) => {
   const handleDropFile = () => {
     setOpen(true);
     setExportFile(false);
@@ -45,7 +51,7 @@ const Navbar = ({ hasPDF, setOpen, setExportFile }) => {
           <BsX className="icon" onClick={() => handleDropFile()} />
           簽個名
           <IconContainer>
-            <BsPen />
+            <BsPen className="icon" onClick={handleEditClick} />
             <BsCheck className="icon" onClick={() => handleFinished()} />
           </IconContainer>
         </>
