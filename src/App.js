@@ -128,9 +128,6 @@ function App() {
 
     const canvas = new fabric.Canvas(`pdf-canvas${index + 1}`);
     canvas.requestRenderAll();
-    console.log(pdfImage.width);
-    console.log(pdfImage.height);
-    console.log(window.devicePixelRatio);
     // 透過比例設定 canvas 尺寸
     canvas.setWidth(pdfImage.width / window.devicePixelRatio);
     canvas.setHeight(pdfImage.height / window.devicePixelRatio);
