@@ -133,9 +133,9 @@ const CreateSignOverlap = ({ handleCreateSign }) => {
   const onSave = useCallback(() => {
     const canvas = canvasRef.current;
     const newImg = canvas.toDataURL("image/png");
-    localStorage.setItem('img', newImg);
+    // localStorage.setItem('img', newImg);
     handleCreateSign(newImg);
-  }, [canvasRef]);
+  }, [canvasRef, handleCreateSign]);
 
   return (
     <Wrapper>

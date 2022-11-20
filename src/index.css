@@ -10,6 +10,10 @@
   text-decoration: none;
 }
 
+#root {
+  width: 100%;
+  height: 100%;
+}
 :root {
   --color-primary: #18a8b1;
   --color-light-grey: #f7f7f7;
@@ -18,25 +22,12 @@
   --color-red: #d7121e;
 }
 
-html {
-  /* font-size: 10px; */
-}
-
 body {
   position: relative;
   font-family: "Noto Sans TC", sans-serif;
   color: var(--color-black);
   height: 100vh;
   font-weight: 400;
-}
-
-/* PDF Page */
-.document {
-  margin-top: 3px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  gap: 10px;
 }
 
 .react-pdf__Page__canvas {

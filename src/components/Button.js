@@ -26,7 +26,7 @@ const Button = ({ handlePdfFileChange }) => {
   return (
     <ButtonContainer>
       <Wrapper>
-        <label for="files">選擇檔案</label>
+        <label htmlFor="files">選擇檔案</label>
         <input
           id="files"
           type="file"
