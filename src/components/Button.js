@@ -9,10 +9,11 @@ const Wrapper = styled.div`
   margin: 0 auto;
   line-height: 45px;
   color: var(--color-white);
-  cursor: pointer;
 
   label {
     cursor: pointer;
+    display: inline-block;
+    width: 100%;
   }
 `;
 const ButtonContainer = styled.div`
