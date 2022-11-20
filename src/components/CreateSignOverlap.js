@@ -8,22 +8,11 @@ const Wrapper = styled.div`
   top: 0px;
   left: 0px;
   background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
   z-index: 2;
-`;
-
-const ResetButtonWrapper = styled.div`
-  border-radius: 4px;
-  max-width: 384px;
-  height: 45px;
-  text-align: center;
-  margin: 0 auto;
-  line-height: 45px;
-  color: var(--color-white);
-  cursor: pointer;
-
-  label {
-    cursor: pointer;
-  }
 `;
 
 const ButtonWrapper = styled.div`
@@ -42,22 +31,18 @@ const ButtonWrapper = styled.div`
   }
 `;
 const ButtonContainer = styled.div`
-  position: absolute;
-  bottom: 24px;
-  padding: 0 24px;
+  padding: 24px;
   width: 100%;
 `;
+const Hint = styled.div`
+  margin: 24px auto;
+`;
 const StyledCanvas = styled.canvas`
-  position: fixed;
-  bottom: 110px;
-  left: 50%;
+  margin: 0 auto;
   border: black 2px solid;
-  transform: translate(-50%, 10px);
 `;
 
-const CreateSignOverlap = ({ handleCreateSign }) => {
-  const canvasRef = useRef(null);
-
+const CreateSignOverlap = ({ canvasRef, handleCreateSign, handleResetSignature }) => {
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
@@ -123,13 +108,6 @@ const CreateSignOverlap = ({ handleCreateSign }) => {
 
   }, []);
 
-  // 重新設定畫布
-  const onReset = useCallback(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-  }, [canvasRef]);
-
   const onSave = useCallback(() => {
     const canvas = canvasRef.current;
     const newImg = canvas.toDataURL("image/png");
@@ -139,12 +117,12 @@ const CreateSignOverlap = ({ handleCreateSign }) => {
 
   return (
     <Wrapper>
-      <StyledCanvas ref={canvasRef} width={500} height={300} />
+      <Hint>
+        請於下方框框簽名
+      </Hint>
+      <StyledCanvas ref={canvasRef} width={500 > window.outerWidth ? window.outerWidth - 24 : 500} height={300} />
 
       <ButtonContainer>
-        <ResetButtonWrapper onClick={onReset}>
-          清除
-        </ResetButtonWrapper>
         <ButtonWrapper onClick={onSave}>
           創建簽名
         </ButtonWrapper>

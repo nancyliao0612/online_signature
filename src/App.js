@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { pdfjs } from "react-pdf";
 import { fabric } from 'fabric';
 import { jsPDF } from "jspdf";
@@ -56,6 +56,8 @@ function App() {
   const [showCreateSignOverlap, setShowCreateSignOverlap] = useState(false);
   const [canvasStateList, setCanvasStateList] = useState([]);
 
+  const canvasRef = useRef(null);
+
   // 使用原生 FileReader 轉檔
   function readBlob(blob) {
     return new Promise((resolve, reject) => {
@@ -70,7 +72,7 @@ function App() {
     const pdfPage = await pdfDoc.getPage(page);
 
     // 設定尺寸及產生 canvas
-    const viewport = pdfPage.getViewport({ scale: window.devicePixelRatio });
+    const viewport = pdfPage.getViewport({ scale: 1 });
     const canvas = document.createElement("canvas");
     const context = canvas.getContext("2d");
 
@@ -126,7 +128,9 @@ function App() {
 
     const canvas = new fabric.Canvas(`pdf-canvas${index + 1}`);
     canvas.requestRenderAll();
-
+    console.log(pdfImage.width);
+    console.log(pdfImage.height);
+    console.log(window.devicePixelRatio);
     // 透過比例設定 canvas 尺寸
     canvas.setWidth(pdfImage.width / window.devicePixelRatio);
     canvas.setHeight(pdfImage.height / window.devicePixelRatio);
@@ -152,12 +156,44 @@ function App() {
     setShowCreateSignOverlap(true);
   };
 
+  const handleDropFile = () => {
+    setOpen(true);
+    setExportFile(false);
+  };
+
+  const handleBack = () => {
+    setShowCreateSignOverlap(false);
+  };
+
+  const handleResetSignature = () => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  };
+
+  const handleFinished = () => {
+    setOpen(true);
+    setExportFile(true);
+  };
+
+  const getNavStatus = () => {
+    if (!hasPDF) {
+      return 'noPDF';
+    }
+    if (showCreateSignOverlap) {
+      return 'signature';
+    }
+    return 'PDF';
+  };
+
   const handleCreateSign = signImg => {
     fabric.Image.fromURL(signImg, function (image) {
       // 設定簽名出現的位置及大小，後續可調整
-      image.top = 400;
+      image.top = canvasStateList[currentPage - 1].height / 2 - 120;
+      image.left = canvasStateList[currentPage - 1].width / 2 - 130;
       image.scaleX = 0.5;
       image.scaleY = 0.5;
+
       canvasStateList[currentPage - 1].add(image);
     });
     setShowCreateSignOverlap(false);
@@ -196,10 +232,12 @@ function App() {
   return (
     <>
       <Navbar
-        hasPDF={hasPDF}
+        navStatus={getNavStatus()}
         handleEditClick={handleEditClick}
-        setOpen={setOpen}
-        setExportFile={setExportFile}
+        handleDropFile={handleDropFile}
+        handleBack={handleBack}
+        handleResetSignature={handleResetSignature}
+        handleFinished={handleFinished}
       />
       {!hasPDF && (
         <>
@@ -217,7 +255,7 @@ function App() {
         </PageSwitcher>
       </CanvasWrapper>
 
-      {showCreateSignOverlap && <CreateSignOverlap handleCreateSign={handleCreateSign} />}
+      {showCreateSignOverlap && <CreateSignOverlap canvasRef={canvasRef} handleCreateSign={handleCreateSign} handleResetSignature={handleResetSignature} />}
       <Dialog
         open={open}
         setOpen={setOpen}

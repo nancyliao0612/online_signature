@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { BsPen, BsCheck, BsX } from "react-icons/bs";
-import { AiOutlineCheck } from "react-icons/ai";
+import { BsPen, BsCheck, BsX, BsArrowLeft } from "react-icons/bs";
+import reset_icon from "./assets/reset_icon.svg";
 
 const Wrapper = styled.section`
   z-index: 3;
@@ -22,6 +22,10 @@ const Wrapper = styled.section`
     cursor: pointer;
   }
 
+  .large {
+    font-size: 32px;
+  }
+
   .signup {
     margin: 0 auto;
   }
@@ -33,33 +37,27 @@ const IconContainer = styled.div`
   gap: 16px;
 `;
 
-const Navbar = ({ hasPDF, setOpen, setExportFile, handleEditClick }) => {
-  const handleDropFile = () => {
-    setOpen(true);
-    setExportFile(false);
-  };
-
-  const handleFinished = () => {
-    setOpen(true);
-    setExportFile(true);
-  };
+const Navbar = ({ navStatus, handleDropFile, handleBack, handleEditClick, handleFinished, handleResetSignature }) => {
 
   return (
     <Wrapper>
-      {hasPDF ? (
-        <>
-          <BsX className="icon" onClick={() => handleDropFile()} />
-          簽個名
-          <IconContainer>
-            <BsPen className="icon" onClick={handleEditClick} />
-            <BsCheck className="icon" onClick={() => handleFinished()} />
-          </IconContainer>
-        </>
-      ) : (
-        <>
-          <div className="signup">簽個名</div>
-        </>
-      )}
+      {navStatus === 'noPDF' && <div className="signup">簽個名</div>}
+      {navStatus === 'PDF' && <>
+        <BsX className="icon large" onClick={handleDropFile} />
+        簽個名
+        <IconContainer>
+          <BsPen className="icon" onClick={handleEditClick} />
+          <BsCheck className="icon large" onClick={handleFinished} />
+        </IconContainer>
+      </>}
+
+      {navStatus === 'signature' && <>
+        <BsArrowLeft className="icon" onClick={handleBack} />
+        簽個名
+        <IconContainer onClick={handleResetSignature}>
+          <img className="icon" src={reset_icon} />
+        </IconContainer>
+      </>}
     </Wrapper>
   );
 };
